@@ -1,0 +1,72 @@
+---
+name: Bug Report
+description: Report a bug or issue with Gmail Cleaner
+title: "[Bug]: "
+labels: ["bug"]
+assignees:
+  - Gururagavendra
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill out the form below.
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      description: How are you running Gmail Cleaner?
+      options:
+        - Docker
+        - Python (uv)
+        - Python (pip)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What happened? What did you expect to happen?
+      placeholder: |
+        What happened?
+        
+        What I expected:
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this bug?
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs
+      description: Paste any error messages or logs here
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain the problem
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues to ensure this bug hasn't been reported
+          required: true
+        - label: I am using my own Google Cloud credentials (not someone else's)
+          required: true
