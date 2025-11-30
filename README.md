@@ -17,7 +17,7 @@ A **free**, privacy-focused tool to bulk unsubscribe from emails, delete emails 
 | 🚫 **Bulk Unsubscribe** | Find newsletters and unsubscribe with one click |
 | 🗑️ **Delete by Sender** | See who sends you the most emails, delete in bulk |
 | ✅ **Mark as Read** | Bulk mark thousands of unread emails as read |
-| 🔍 **Smart Filters** | Filter by age, size, and category (Promotions, Social, Updates) |
+| 🔍 **Smart Filters** | Filter by days, size of email, and category (Promotions, Social, Updates) |
 | 🔒 **Privacy First** | Runs locally - your data never leaves your machine |
 | ⚡ **Super Fast** | Gmail API with batch requests (100 emails per API call) |
 | 🎨 **Gmail-style UI** | Clean, familiar interface |
