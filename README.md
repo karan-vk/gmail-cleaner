@@ -152,6 +152,7 @@ If you see `OAuth error: (mismatching_state) CSRF Warning`:
 1. **Stop and clean up:**
    ```bash
    docker compose down
+   rm -f token.json
    ```
 
 2. **Clear browser cookies** for `accounts.google.com` (or use incognito/private window)
