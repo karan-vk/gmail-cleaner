@@ -22,3 +22,9 @@ Thumbs.db
 
 # Personal notes (not committed)
 IMPROVEMENTS.md
+
+# Test/Coverage artifacts
+.coverage
+.pytest_cache/
+htmlcov/
+coverage.xml
