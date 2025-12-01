@@ -28,7 +28,6 @@ A **free**, privacy-focused tool to bulk unsubscribe from emails, delete emails 
 
 **[Watch Setup Video on YouTube](https://youtu.be/CmOWn8Tm5ZE)** - Step-by-step guide to create OAuth credentials
 
-*Filter by days/size-of-email/category → Scan senders → Select → Delete thousands of emails in seconds!*
 
 ## Setup
 
