@@ -166,14 +166,14 @@ class TestMarkReadRequest:
         assert request.filters is None
 
     def test_count_maximum(self):
-        """Maximum count should be 10000."""
-        request = MarkReadRequest(count=10000)
-        assert request.count == 10000
+        """Maximum count should be 100000."""
+        request = MarkReadRequest(count=100000)
+        assert request.count == 100000
 
     def test_count_above_maximum(self):
-        """Count above 10000 should fail."""
+        """Count above 100000 should fail."""
         with pytest.raises(ValidationError):
-            MarkReadRequest(count=10001)
+            MarkReadRequest(count=100001)
 
 
 class TestDeleteBulkRequest:

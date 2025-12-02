@@ -56,7 +56,7 @@ class ScanRequest(BaseModel):
 
 class MarkReadRequest(BaseModel):
     """Request to mark emails as read."""
-    count: int = Field(default=100, ge=1, le=10000, description="Number of emails to mark")
+    count: int = Field(default=100, ge=1, le=100000, description="Number of emails to mark")
     filters: Optional[FiltersModel] = Field(default=None, description="Gmail filter options")
 
 
@@ -79,7 +79,7 @@ class DeleteEmailsRequest(BaseModel):
 
 class DeleteBulkRequest(BaseModel):
     """Request to delete emails from multiple senders."""
-    senders: list[str] = Field(default=[], max_items=50, description="List of sender addresses (max 50)")
+    senders: list[str] = Field(default=[], max_length=50, description="List of sender addresses (max 50)")
 
 
 # ----- Response Models -----

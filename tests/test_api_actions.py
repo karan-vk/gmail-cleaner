@@ -124,8 +124,8 @@ class TestMarkReadEndpoint:
         assert response.status_code == 200
 
     def test_mark_read_exceeds_max_count(self, client):
-        """POST /api/mark-read with count > 10000 should fail."""
-        response = client.post("/api/mark-read", json={"count": 10001})
+        """POST /api/mark-read with count > 100000 should fail."""
+        response = client.post("/api/mark-read", json={"count": 100001})
         assert response.status_code == 422
 
 

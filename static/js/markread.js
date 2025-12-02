@@ -30,7 +30,10 @@ GmailCleaner.MarkRead = {
         
         let count = countSelect.value;
         if (count === 'all') {
-            count = 999999;
+            // Get actual unread count from the displayed value
+            const countEl = document.querySelector('#unreadCount .count-number');
+            const unreadCount = parseInt(countEl.textContent.replace(/,/g, '')) || 10000;
+            count = unreadCount;
         } else {
             count = parseInt(count);
         }
