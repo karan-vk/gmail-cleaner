@@ -2,7 +2,7 @@ name: PR Checks
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, labeled, unlabeled]
+    types: [opened]
 
 permissions:
   pull-requests: write
@@ -45,14 +45,8 @@ jobs:
             const pr = context.payload.pull_request;
             const creator = pr.user.login;
 
-            // Get current assignees
-            const { data: prData } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pr.number,
-            });
-
-            const currentAssignees = prData.assignees.map(a => a.login);
+            // Get current assignees from webhook payload
+            const currentAssignees = (pr.assignees || []).map(a => a.login);
 
             // Add creator if not already assigned
             if (!currentAssignees.includes(creator)) {
