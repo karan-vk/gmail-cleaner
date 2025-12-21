@@ -161,9 +161,9 @@ def _get_credentials_path() -> str | None:
             with open(settings.credentials_file, "w") as f:
                 f.write(env_creds)
             return settings.credentials_file
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, TypeError):
             logger.error(
-                "GOOGLE_CREDENTIALS environment variable contains invalid JSON",
+                "GOOGLE_CREDENTIALS environment variable contains invalid JSON/type",
                 exc_info=True,
             )
             return None

@@ -147,6 +147,7 @@ By default, the `token.json` volume is commented out in `docker-compose.yml`.
 2. **From the second time onwards (uncomment it):**
 
    - Now uncomment the `token.json` volume in `docker-compose.yml`:
+
      ```yaml
      - type: bind
        source: ./token.json
@@ -154,6 +155,7 @@ By default, the `token.json` volume is commented out in `docker-compose.yml`.
        bind:
          create_host_path: false
      ```
+
    - Restart the container: `docker compose down && docker compose up`
    - Your authentication will now persist across container restarts!
 

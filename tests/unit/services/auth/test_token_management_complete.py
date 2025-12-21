@@ -15,13 +15,24 @@ class TestTokenCreationAndStorage:
     """Tests for token creation and storage scenarios"""
 
     @patch("app.services.auth.settings")
-    @patch("os.path.exists")
+    @patch("app.services.auth._is_file_empty")
+    @patch("app.services.auth.os.path.exists")
     @patch("app.services.auth.InstalledAppFlow")
     @patch("app.services.auth._auth_in_progress", {"active": False})
     @patch("app.services.auth.is_web_auth_mode", return_value=False)
-    @patch("builtins.open", new_callable=mock_open)
+    @patch(
+        "builtins.open",
+        new_callable=mock_open,
+        read_data='{"installed": {"client_id": "test", "client_secret": "secret"}}',
+    )
     def test_token_file_created_after_oauth(
-        self, mock_file, mock_web_auth, mock_flow, mock_exists, mock_settings
+        self,
+        mock_file,
+        mock_web_auth,
+        mock_flow,
+        mock_exists,
+        mock_is_file_empty,
+        mock_settings,
     ):
         """Token file should be created after successful OAuth."""
         mock_settings.credentials_file = "credentials.json"
@@ -38,6 +49,7 @@ class TestTokenCreationAndStorage:
             return False
 
         mock_exists.side_effect = exists_side_effect
+        mock_is_file_empty.return_value = False
 
         mock_flow_instance = Mock()
         mock_flow.from_client_secrets_file.return_value = mock_flow_instance
@@ -50,6 +62,7 @@ class TestTokenCreationAndStorage:
 
         # OAuth runs in background thread, so we verify the structure
         assert service is None
+        assert error is not None
         assert "Sign-in started" in error
 
     @patch("app.services.auth.settings")
@@ -82,7 +95,8 @@ class TestTokenCreationAndStorage:
         assert result is False
 
     @patch("app.services.auth.settings")
-    @patch("os.path.exists")
+    @patch("app.services.auth._is_file_empty")
+    @patch("app.services.auth.os.path.exists")
     @patch("app.services.auth.Credentials")
     @patch("app.services.auth.Request")
     @patch("builtins.open", new_callable=mock_open)
@@ -94,6 +108,7 @@ class TestTokenCreationAndStorage:
         mock_request,
         mock_creds_class,
         mock_exists,
+        mock_is_file_empty,
         mock_settings,
     ):
         """Token refresh should save new token to file."""
@@ -101,6 +116,7 @@ class TestTokenCreationAndStorage:
         mock_settings.scopes = ["scope1", "scope2"]
 
         mock_exists.return_value = True
+        mock_is_file_empty.return_value = False
 
         mock_creds = Mock(spec=Credentials)
         mock_creds.valid = False
@@ -160,7 +176,8 @@ class TestTokenValidation:
         assert result is False
 
     @patch("app.services.auth.settings")
-    @patch("os.path.exists")
+    @patch("app.services.auth._is_file_empty")
+    @patch("app.services.auth.os.path.exists")
     @patch("app.services.auth.Credentials")
     @patch("app.services.auth.Request")
     @patch("builtins.open", new_callable=mock_open)
@@ -172,6 +189,7 @@ class TestTokenValidation:
         mock_request,
         mock_creds_class,
         mock_exists,
+        mock_is_file_empty,
         mock_settings,
     ):
         """Expired token with valid refresh token should auto-refresh."""
@@ -179,6 +197,7 @@ class TestTokenValidation:
         mock_settings.scopes = ["scope1", "scope2"]
 
         mock_exists.return_value = True
+        mock_is_file_empty.return_value = False
 
         mock_creds = Mock(spec=Credentials)
         mock_creds.valid = False

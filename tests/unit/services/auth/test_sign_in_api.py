@@ -239,11 +239,17 @@ class TestAuthenticationStatePersistence:
     """Tests for authentication state persistence scenarios"""
 
     @patch("app.services.auth.settings")
-    @patch("os.path.exists")
+    @patch("app.services.auth._is_file_empty")
+    @patch("app.services.auth.os.path.exists")
     @patch("app.services.auth.Credentials")
     @patch("app.services.auth.build")
     def test_auth_state_persists_after_restart(
-        self, mock_build, mock_creds_class, mock_exists, mock_settings
+        self,
+        mock_build,
+        mock_creds_class,
+        mock_exists,
+        mock_is_file_empty,
+        mock_settings,
     ):
         """Authentication state should persist after application restart."""
         from app.services import auth
@@ -252,6 +258,7 @@ class TestAuthenticationStatePersistence:
         mock_settings.scopes = ["scope1", "scope2"]
 
         mock_exists.return_value = True
+        mock_is_file_empty.return_value = False
 
         mock_creds = Mock()
         mock_creds.valid = True

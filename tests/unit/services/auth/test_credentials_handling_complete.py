@@ -79,21 +79,17 @@ class TestCredentialsFromEnvironmentVariable:
 
     @patch("app.services.auth.settings")
     @patch("os.path.exists")
-    @patch("builtins.open", new_callable=mock_open)
     @patch.dict(os.environ, {"GOOGLE_CREDENTIALS": "invalid json"}, clear=False)
-    def test_credentials_env_var_invalid_json(
-        self, mock_file, mock_exists, mock_settings
-    ):
-        """Invalid JSON in GOOGLE_CREDENTIALS should still create file (validation happens later)."""
+    def test_credentials_env_var_invalid_json(self, mock_exists, mock_settings):
+        """Invalid JSON in GOOGLE_CREDENTIALS should return None (validation happens before writing)."""
         mock_settings.credentials_file = "credentials.json"
 
         mock_exists.return_value = False
 
         result = auth._get_credentials_path()
 
-        # File is created, but will fail when OAuth flow tries to use it
-        assert result == "credentials.json"
-        mock_file.return_value.write.assert_called_once_with("invalid json")
+        # Invalid JSON is validated before writing, so returns None
+        assert result is None
 
 
 class TestCredentialsFilePrecedence:

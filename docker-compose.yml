@@ -1,4 +1,3 @@
-
 services:
   gmail-cleaner:
     # Option 1: Multi-arch image: works natively on both AMD64 and ARM64 (Apple Silicon)
@@ -15,6 +14,7 @@ services:
         target: /app/credentials.json
         bind:
           create_host_path: false
+        read_only: true
       # Uncomment the token.json volume below if you want to persist authentication
       # across container restarts. This means you won't need to sign in again after
       # restarting the container.

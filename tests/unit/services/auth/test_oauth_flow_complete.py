@@ -4,7 +4,7 @@ Tests for Complete OAuth Flow Scenarios
 Tests for successful OAuth flows and edge cases not covered in existing tests.
 """
 
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, mock_open
 
 
 from app.services import auth
@@ -14,13 +14,24 @@ class TestSuccessfulOAuthFlow:
     """Tests for successful OAuth flow scenarios"""
 
     @patch("app.services.auth.settings")
-    @patch("os.path.exists")
+    @patch("app.services.auth._is_file_empty")
+    @patch("app.services.auth.os.path.exists")
     @patch("app.services.auth.InstalledAppFlow")
     @patch("app.services.auth._auth_in_progress", {"active": False})
     @patch("app.services.auth.is_web_auth_mode", return_value=False)
-    @patch("builtins.open", create=True)
+    @patch(
+        "builtins.open",
+        new_callable=mock_open,
+        read_data='{"installed": {"client_id": "test", "client_secret": "secret"}}',
+    )
     def test_complete_oauth_flow_saves_token(
-        self, mock_file, mock_web_auth, mock_flow, mock_exists, mock_settings
+        self,
+        mock_file,
+        mock_web_auth,
+        mock_flow,
+        mock_exists,
+        mock_is_file_empty,
+        mock_settings,
     ):
         """Complete OAuth flow should save token successfully."""
         mock_settings.credentials_file = "credentials.json"
@@ -37,6 +48,7 @@ class TestSuccessfulOAuthFlow:
             return False
 
         mock_exists.side_effect = exists_side_effect
+        mock_is_file_empty.return_value = False
 
         # Mock successful OAuth flow
         mock_flow_instance = Mock()
@@ -52,6 +64,7 @@ class TestSuccessfulOAuthFlow:
 
         # Should start OAuth (runs in background thread)
         assert service is None
+        assert error is not None
         assert "Sign-in started" in error
 
     @patch("app.services.auth.settings")
