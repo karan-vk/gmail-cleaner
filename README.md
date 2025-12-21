@@ -39,6 +39,14 @@ Works on **all major platforms** - both Docker and local installation:
 | macOS Intel | Native | Native |
 | macOS Apple Silicon (M1/M2/M3/M4) | Native | Native |
 
+## Security & Privacy
+
+- **100% Local** - No external servers, no data collection
+- **Open Source** - Inspect all the code yourself
+- **Minimal Permissions** - Only requests read + modify (for mark as read)
+- **Your Credentials** - You control your own Google OAuth app
+- **Gitignored Secrets** - `credentials.json` and `token.json` never get committed
+
 ## Demo
 
 ![Gmail Cleaner Demo](media/demo.gif)
@@ -181,13 +189,6 @@ uv run python main.py
 
 The app opens at http://localhost:8766
 
-## Security & Privacy
-
-- **100% Local** - No external servers, no data collection
-- **Open Source** - Inspect all the code yourself
-- **Minimal Permissions** - Only requests read + modify (for mark as read)
-- **Your Credentials** - You control your own Google OAuth app
-- **Gitignored Secrets** - `credentials.json` and `token.json` never get committed
 
 ## FAQ
 
