@@ -64,6 +64,7 @@ class AppState:
         # Auth state
         self.pending_auth_url: dict = {"url": None}
         self.pending_auth_code: dict = {"code": None}
+        self.oauth_state: dict = {"state": None}
 
         # Label operation state
         self.label_operation_status: dict = {
