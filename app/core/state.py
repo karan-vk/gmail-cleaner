@@ -4,6 +4,8 @@ Global Application State
 Shared state across the application.
 """
 
+import threading
+
 
 class AppState:
     """Global application state container."""
@@ -65,6 +67,7 @@ class AppState:
         self.pending_auth_url: dict = {"url": None}
         self.pending_auth_code: dict = {"code": None}
         self.oauth_state: dict = {"state": None}
+        self.oauth_state_lock: threading.Lock = threading.Lock()
 
         # Label operation state
         self.label_operation_status: dict = {
