@@ -4,6 +4,7 @@ Application Configuration
 Central configuration and settings for the application.
 """
 
+import os
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -45,6 +46,15 @@ class Settings(BaseSettings):
 
     credentials_file: str = "credentials.json"
     token_file: str = "token.json"
+
+    def __init__(self, **kwargs):
+        """Initialize settings and auto-detect data directory for token persistence."""
+        super().__init__(**kwargs)
+        # Auto-detect /app/data directory in Docker and use it for token_file
+        # This allows token.json to persist across container restarts
+        if os.path.exists("/app/data") and os.path.isdir("/app/data"):
+            if not os.path.isabs(self.token_file):
+                self.token_file = os.path.join("/app/data", self.token_file)
 
     # Gmail API
     scopes: list[str] = [
