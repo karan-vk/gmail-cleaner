@@ -161,37 +161,37 @@ docker logs $(docker ps -q --filter name=gmail-cleaner)
 
 > **🌐 Using a custom domain, remote server, or custom port mapping?** See [Advanced Configuration](#advanced-configuration) for setup instructions.
 
-#### Persisting Authentication (token.json volume)
+#### Persisting Authentication (Data Directory)
 
-By default, the `token.json` volume is commented out in `docker-compose.yml`.
+The `docker-compose.yml` includes a `data` directory volume mount that automatically persists your authentication token.
 
-**Workflow:**
+**How it works:**
 
-1. **First-time setup (keep it commented):**
-   - Keep the `token.json` volume commented during first authentication
-   - The token will be created inside the Docker container during the OAuth flow
-   - After successful authentication, the token is available inside the container
+- The `./data` directory on your host is mounted to `/app/data` in the container
+- When you authenticate, `token.json` is automatically saved to `/app/data/token.json` inside the container
+- This file is persisted to `./data/token.json` on your host filesystem
+- On subsequent container restarts, your authentication persists automatically
 
-2. **From the second time onwards (uncomment it):**
+**No manual steps required!**
 
-   - Now uncomment the `token.json` volume in `docker-compose.yml`:
+- ✅ First-time setup: Just run `docker compose up` - the `data` directory is created automatically
+- ✅ Authentication persists: Your token is saved to `./data/token.json` on the host
+- ✅ Container restarts: Your authentication is automatically loaded from the persisted file
 
-     ```yaml
-     - type: bind
-       source: ./token.json
-       target: /app/token.json
-       bind:
-         create_host_path: false
-     ```
+**To reset authentication:**
 
-   - Restart the container: `docker compose down && docker compose up`
-   - Your authentication will now persist across container restarts!
+If you need to sign in with a different account or reset authentication:
 
-**When to keep it commented:**
-- ⚠️ First-time setup (until you've successfully authenticated)
-- Debugging authentication issues
-- Testing with different accounts
-- When you want to force a fresh authentication
+```bash
+# Stop the container
+docker compose down
+
+# Remove the token file
+rm -f ./data/token.json
+
+# Start again (will prompt for new authentication)
+docker compose up
+```
 
 ### Option B: Python (with uv)
 

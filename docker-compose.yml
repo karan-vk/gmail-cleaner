@@ -17,19 +17,14 @@ services:
         bind:
           create_host_path: false
         read_only: true
-      # Uncomment the token.json volume below if you want to persist authentication
-      # across container restarts. This means you won't need to sign in again after
-      # restarting the container.
-      #
-      # IMPORTANT: Keep it commented for FIRST-TIME setup. During first authentication,
-      # the token.json will be created inside the Docker container. After successful
-      # authentication, you can uncomment this volume mapping from the SECOND time
-      # onwards to persist your authentication across container restarts.
-      # - type: bind
-      #   source: ./token.json
-      #   target: /app/token.json
-      #   bind:
-      #     create_host_path: false
+      # Mount data directory for persistent storage (token.json and other data)
+      # The token.json file will be automatically stored in /app/data/token.json
+      # and persisted to ./data/token.json on the host
+      - type: bind
+        source: ./data
+        target: /app/data
+        bind:
+          create_host_path: true
     environment:
       - WEB_AUTH=true
 
