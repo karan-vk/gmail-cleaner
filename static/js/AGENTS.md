@@ -4,7 +4,7 @@
 Vanilla JavaScript frontend using a "Module Pattern" architecture. No framework, no build step.
 
 ## STRUCTURE
-```
+```text
 static/js/
 ├── main.js        # Entry point (DOMContentLoaded, Event listeners)
 ├── ui.js          # Shared UI utilities (Toast, View switching)
@@ -36,8 +36,10 @@ static/js/
 - **Duplication**: Avoid copying "Overlay" or "Polling" logic (use `ui.js`).
 
 ## COMMON TASKS
+
 | Task | implementation |
 |------|----------------|
 | **Add View** | Add HTML to `index.html`, add nav in `main.js`, add show() in `ui.js`. |
 | **New API Call** | Use `fetch('/api/...')`, handle errors, update UI. |
 | **Show Toast** | `GmailCleaner.UI.showToast(message, type)`. |
+

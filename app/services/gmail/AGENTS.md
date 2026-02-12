@@ -4,7 +4,7 @@
 Core business logic for Gmail operations. Modular design with shared helpers.
 
 ## STRUCTURE
-```
+```text
 app/services/gmail/
 ├── __init__.py    # Facade (exports cleaner API)
 ├── helpers.py     # Shared logic (Query builder, Batch headers)

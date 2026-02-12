@@ -4,7 +4,7 @@
 Pytest suite with `pytest-asyncio` and extensive mocking.
 
 ## STRUCTURE
-```
+```text
 tests/
 ├── conftest.py              # Shared fixtures (CRITICAL)
 ├── unit/
