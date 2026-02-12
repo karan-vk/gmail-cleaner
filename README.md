@@ -2,12 +2,17 @@
 
 A **free**, privacy-focused tool to bulk unsubscribe from emails, delete emails by sender, and mark emails as read. No subscriptions, no data collection - runs 100% on your machine.
 
-
-![Python](https://img.shields.io/badge/Python-3.9+-blue?style=flat-square&logo=python)
-![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)
-![Gmail API](https://img.shields.io/badge/Gmail-API-EA4335?style=flat-square&logo=gmail)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-![GitHub stars](https://img.shields.io/github/stars/Gururagavendra/gmail-cleaner?style=flat-square&logo=github)
+[![Latest Release](https://img.shields.io/github/v/release/Gururagavendra/gmail-cleaner?style=flat-square&logo=github&label=Release)](https://github.com/Gururagavendra/gmail-cleaner/releases)
+[![Python](https://img.shields.io/badge/Python-3.9+-blue?style=flat-square&logo=python)](https://www.python.org/downloads/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://hub.docker.com/r/gururagavendra/gmail-cleaner)
+[![Tests](https://img.shields.io/github/actions/workflow/status/Gururagavendra/gmail-cleaner/tests.yml?style=flat-square&logo=github&label=Tests)](https://github.com/Gururagavendra/gmail-cleaner/actions/workflows/tests.yml)
+[![Coverage](https://img.shields.io/codecov/c/github/Gururagavendra/gmail-cleaner?style=flat-square&logo=codecov&label=Coverage)](https://codecov.io/gh/Gururagavendra/gmail-cleaner)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/Gururagavendra/gmail-cleaner?style=flat-square&logo=github)](https://github.com/Gururagavendra/gmail-cleaner/stargazers)
+[![Open Issues](https://img.shields.io/github/issues/Gururagavendra/gmail-cleaner?style=flat-square&logo=github)](https://github.com/Gururagavendra/gmail-cleaner/issues)
+[![Code style: Ruff](https://img.shields.io/badge/Code%20Style-Ruff-orange?style=flat-square)](https://docs.astral.sh/ruff/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
+[![Security](https://img.shields.io/badge/Security-Policy-blue?style=flat-square)](SECURITY.md)
 
 > **No Subscription Required - Free Forever**
 

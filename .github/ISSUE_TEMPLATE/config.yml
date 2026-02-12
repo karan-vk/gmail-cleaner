@@ -1,1 +1,11 @@
 blank_issues_enabled: true
+contact_links:
+  - name: Security Vulnerability
+    url: https://github.com/Gururagavendra/gmail-cleaner/security/policy
+    about: Please report security vulnerabilities through our security policy
+  - name: Feature Request
+    url: https://github.com/Gururagavendra/gmail-cleaner/issues/new?template=feature_request.yml
+    about: Suggest a new feature or improvement
+  - name: Questions & Discussions
+    url: https://github.com/Gururagavendra/gmail-cleaner/discussions
+    about: Ask questions and discuss with the community

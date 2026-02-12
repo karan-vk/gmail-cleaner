@@ -1,12 +1,49 @@
 ## Description
 
-<!-- What does this PR do? -->
+<!-- What does this PR do? Provide a clear, concise description. -->
+
+## Type of Change
+
+- [ ] 🐛 Bug fix (non-breaking change that fixes an issue)
+- [ ] ✨ New feature (non-breaking change that adds functionality)
+- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to change)
+- [ ] 📚 Documentation update
+- [ ] 🔧 Refactor (code improvement without functional changes)
+- [ ] ✅ Test update
+
+## How Has This Been Tested?
+
+<!-- Describe the tests you ran to verify your changes. -->
+
+- [ ] Unit tests pass locally
+- [ ] Integration tests pass (if applicable)
+- [ ] Manual testing performed
+
+**Test Configuration:**
+- Python version:
+- OS:
 
 ## Checklist
 
-- [ ] I have tested my changes locally
-- [ ] Docker build works (if modified)
+- [ ] My code follows the style guidelines of this project
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing unit tests pass locally with my changes
+- [ ] Any dependent changes have been merged and published
+
+## Screenshots (if applicable)
+
+<!-- Add screenshots to help explain your changes. -->
 
 ## Related Issues
 
-<!-- Fixes #123 -->
+<!-- Link any related issues here. Use "Fixes #123" to auto-close issues when merged. -->
+
+Fixes #
+
+## Additional Notes
+
+<!-- Add any other context about the PR here. -->
