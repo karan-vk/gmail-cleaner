@@ -173,48 +173,193 @@
                         </div>
                     </div>
 
-                    <!-- Setup View -->
+                    <!-- Setup View - Multi-step Wizard -->
                     <div class="view hidden" id="setupView">
-                        <div class="empty-state">
-                            <div class="empty-icon">
-                                <svg viewBox="0 0 24 24" width="120" height="120">
-                                    <path fill="#dadce0" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2v-2h-2v2zm0-4h2V7h-2v6z"/>
-                                </svg>
-                            </div>
-                            <h2>Setup Required</h2>
-                            <p>Please upload your <code>credentials.json</code> file to get started.</p>
-                            
-                            <div class="setup-actions">
-                                <input type="file" id="credentialsFile" accept=".json" style="display: none;" onchange="GmailCleaner.Auth.handleFileSelect(this)">
-                                <button class="btn btn-secondary btn-large" onclick="document.getElementById('credentialsFile').click()">
-                                    <svg viewBox="0 0 24 24" width="20" height="20">
-                                        <path fill="currentColor" d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
-                                    </svg>
-                                    Select credentials.json
-                                </button>
-                            </div>
-                            
-                            <div id="fileInfo" class="hidden file-info">
-                                <p id="fileName" class="file-name"></p>
-                                <div class="file-actions">
-                                    <button class="btn btn-primary btn-large" id="uploadBtn" onclick="GmailCleaner.Auth.uploadCredentials()">
-                                        Upload & Continue
-                                    </button>
-                                    <button class="btn btn-secondary btn-large" onclick="document.getElementById('credentialsFile').click()">
-                                        Change file
-                                    </button>
+                        <div class="setup-wizard">
+                            <!-- Progress Steps -->
+                            <div class="setup-progress">
+                                <div class="setup-step-indicator active" data-step="1">
+                                    <div class="step-number">1</div>
+                                    <span class="step-label">Get Credentials</span>
+                                </div>
+                                <div class="setup-step-line"></div>
+                                <div class="setup-step-indicator" data-step="2">
+                                    <div class="step-number">2</div>
+                                    <span class="step-label">Upload</span>
+                                </div>
+                                <div class="setup-step-line"></div>
+                                <div class="setup-step-indicator" data-step="3">
+                                    <div class="step-number">3</div>
+                                    <span class="step-label">Sign In</span>
                                 </div>
                             </div>
 
-                            <div class="setup-instructions">
-                                <h3>How to get credentials.json:</h3>
-                                <ol>
-                                    <li>Go to <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
-                                    <li>Create a project and enable <strong>Gmail API</strong></li>
-                                    <li>Go to <strong>Credentials</strong> → Create Credentials → OAuth client ID</li>
-                                    <li>Select <strong>Desktop app</strong> (or Web app for Docker)</li>
-                                    <li>Download the JSON file and upload it here</li>
-                                </ol>
+                            <!-- Step 1: Instructions -->
+                            <div class="setup-step active" id="setupStep1">
+                                <div class="setup-step-content">
+                                    <div class="setup-header">
+                                        <div class="setup-icon-large">
+                                            <svg viewBox="0 0 24 24" width="64" height="64">
+                                                <path fill="#1a73e8" d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10S2 17.514 2 12 6.486 2 12 2zm-1 5v2h2V7h-2zm0 4v6h2v-6h-2z"/>
+                                            </svg>
+                                        </div>
+                                        <h2>Create Google Cloud Credentials</h2>
+                                        <p>Follow these steps to enable Gmail API access</p>
+                                    </div>
+
+                                    <div class="setup-instructions-cards">
+                                        <div class="instruction-card">
+                                            <div class="instruction-number">1</div>
+                                            <div class="instruction-content">
+                                                <h4>Open Google Cloud Console</h4>
+                                                <p>Go to the Google Cloud Console to create your project.</p>
+                                                <a href="https://console.cloud.google.com/" target="_blank" rel="noopener" class="btn btn-secondary btn-small">
+                                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                                        <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                                                    </svg>
+                                                    Open Console
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="instruction-card">
+                                            <div class="instruction-number">2</div>
+                                            <div class="instruction-content">
+                                                <h4>Create a New Project</h4>
+                                                <p>Click the project dropdown at the top and select <strong>"New Project"</strong>. Name it "Gmail Cleaner" and click Create.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="instruction-card">
+                                            <div class="instruction-number">3</div>
+                                            <div class="instruction-content">
+                                                <h4>Enable Gmail API</h4>
+                                                <p>Navigate to <strong>APIs & Services → Library</strong>, search for "Gmail API", and click <strong>Enable</strong>.</p>
+                                                <a href="https://console.cloud.google.com/apis/library/gmail.googleapis.com" target="_blank" rel="noopener" class="btn btn-secondary btn-small">
+                                                    Go to Gmail API
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="instruction-card">
+                                            <div class="instruction-number">4</div>
+                                            <div class="instruction-content">
+                                                <h4>Create OAuth Credentials</h4>
+                                                <p>Go to <strong>APIs & Services → Credentials</strong>, click <strong>"Create Credentials" → "OAuth client ID"</strong>.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="instruction-card">
+                                            <div class="instruction-number">5</div>
+                                            <div class="instruction-content">
+                                                <h4>Configure & Download</h4>
+                                                <p>Select <strong>Desktop app</strong> as the application type. Name it and click Create. Download the JSON file.</p>
+                                                <div class="setup-tip">
+                                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                                        <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                                    </svg>
+                                                    <span>For Docker, use "Web application" and add your URL as an authorized redirect URI.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="setup-step-actions">
+                                        <button class="btn btn-primary btn-large" onclick="GmailCleaner.Auth.goToStep(2)">
+                                            I have my credentials file
+                                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                                <path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Upload -->
+                            <div class="setup-step" id="setupStep2">
+                                <div class="setup-step-content">
+                                    <div class="setup-header">
+                                        <div class="setup-icon-large">
+                                            <svg viewBox="0 0 24 24" width="64" height="64">
+                                                <path fill="#1a73e8" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                                            </svg>
+                                        </div>
+                                        <h2>Upload Credentials</h2>
+                                        <p>Drag and drop your credentials.json file or click to browse</p>
+                                    </div>
+
+                                    <div class="upload-zone" id="uploadZone">
+                                        <input type="file" id="credentialsFile" accept=".json" style="display: none;" onchange="GmailCleaner.Auth.handleFileSelect(this)">
+                                        <div class="upload-zone-content" onclick="document.getElementById('credentialsFile').click()">
+                                            <svg viewBox="0 0 24 24" width="48" height="48" class="upload-icon">
+                                                <path fill="#9aa0a6" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                                            </svg>
+                                            <p class="upload-text">Drag & drop your file here</p>
+                                            <p class="upload-subtext">or click to browse</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="upload-success hidden" id="uploadSuccess">
+                                        <div class="upload-success-icon">
+                                            <svg viewBox="0 0 24 24" width="48" height="48">
+                                                <path fill="#34a853" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            </svg>
+                                        </div>
+                                        <h3>File Ready!</h3>
+                                        <p id="uploadedFileName" class="uploaded-file-name"></p>
+                                    </div>
+
+                                    <div class="setup-step-actions">
+                                        <button class="btn btn-secondary" onclick="GmailCleaner.Auth.goToStep(1)">
+                                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                                <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                            </svg>
+                                            Back
+                                        </button>
+                                        <button class="btn btn-primary btn-large" id="uploadBtn" onclick="GmailCleaner.Auth.uploadCredentials()" disabled>
+                                            Upload & Continue
+                                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                                <path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Sign In -->
+                            <div class="setup-step" id="setupStep3">
+                                <div class="setup-step-content">
+                                    <div class="setup-header">
+                                        <div class="setup-icon-large success">
+                                            <svg viewBox="0 0 24 24" width="64" height="64">
+                                                <path fill="#34a853" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            </svg>
+                                        </div>
+                                        <h2>Credentials Uploaded!</h2>
+                                        <p>Now sign in with your Google account to start cleaning your inbox</p>
+                                    </div>
+
+                                    <div class="setup-complete-card">
+                                        <div class="setup-complete-content">
+                                            <svg viewBox="0 0 24 24" width="24" height="24">
+                                                <path fill="#1a73e8" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                                            </svg>
+                                            <div>
+                                                <strong>Privacy First</strong>
+                                                <p>Your data stays local. Nothing is sent to external servers.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="setup-step-actions center">
+                                        <button class="btn btn-primary btn-large btn-google" onclick="GmailCleaner.Auth.signInFromSetup()">
+                                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                                <path fill="currentColor" d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2 12.545,2C7.021,2 2.543,6.477 2.543,12s4.478,10 10.002,10c8.396,0 10.249-7.85 9.426-11.748L12.545,10.239z"/>
+                                            </svg>
+                                            Sign in with Google
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
