@@ -22,6 +22,9 @@ Thumbs.db
 
 # Personal notes (not committed)
 IMPROVEMENTS.md
+AGENTS.md
+
+**/AGENTS.md
 
 # Test/Coverage artifacts
 .coverage
