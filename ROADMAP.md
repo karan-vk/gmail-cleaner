@@ -41,9 +41,9 @@ Gmail Cleaner aims to be the go-to open-source solution for Gmail users who want
 
 ### In Progress 🔄
 
-- [ ] Integration tests suite
-- [ ] Performance optimizations for large inboxes (100k+ emails)
-- [ ] Better error handling and user feedback
+- [x] Integration tests suite
+- [x] Performance optimizations for large inboxes (100k+ emails)
+- [x] Better error handling and user feedback
 
 ---
 
