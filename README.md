@@ -11,6 +11,17 @@ A **free**, privacy-focused tool to bulk unsubscribe from emails, delete emails 
 
 > **No Subscription Required - Free Forever**
 
+## 🚀 Download & Install
+
+The easiest way to use Gmail Cleaner is to download the standalone app for your operating system.
+
+1.  Go to the [Releases](https://github.com/Gururagavendra/gmail-cleaner/releases) page.
+2.  Download the version for your OS:
+    *   **Windows**: `.exe` installer
+    *   **macOS**: `.dmg` or `.app`
+    *   **Linux**: `AppImage` or binary
+3.  Launch the app and follow the on-screen instructions to upload your `credentials.json`.
+
 ## Features
 
 | Feature | Description |
@@ -76,6 +87,10 @@ Lets make this tool a better one by improving as much as possible, All features 
 
 **Important**: You must create your **OWN** Google Cloud credentials. This app doesn't include pre-configured OAuth - that's what makes it privacy-focused! Each user runs their own instance with their own credentials.
 
+Once you have your `credentials.json`, you can either:
+- **Standalone App**: Simply upload it via the app's user interface.
+- **Docker/Python**: Place it in the project root folder.
+
 ### 1. Get Google OAuth Credentials
 
 **Video Tutorial**: [Watch on YouTube](https://youtu.be/CmOWn8Tm5ZE) for a visual walkthrough
@@ -129,7 +144,14 @@ cd gmail-cleaner
 
 ## Usage
 
-### Option A: Docker (Recommended)
+### Option A: Standalone App (Recommended)
+
+1.  Download and install the app from the [Releases](https://github.com/Gururagavendra/gmail-cleaner/releases) page.
+2.  Launch the application.
+3.  When prompted, upload your `credentials.json` file.
+4.  Click **"Sign In"** and follow the OAuth flow in your browser.
+
+### Option B: Docker (Alternative / Server Mode)
 
 1. Pull the latest image and start the container:
 ```bash
@@ -193,7 +215,7 @@ rm -f ./data/token.json
 docker compose up
 ```
 
-### Option B: Python (with uv)
+### Option C: Python (Development)
 
 ```bash
 uv sync
@@ -391,6 +413,26 @@ This error occurs when you try to use an **IP address** in the redirect URI (e.g
    - Set `OAUTH_HOST=mygmail.duckdns.org` in docker-compose.yml
 
 **Remember:** The redirect URI in Google Cloud Console must exactly match what you set in `OAUTH_HOST` + port.
+
+## 🛠️ Development & Building
+
+If you want to build the standalone app yourself:
+
+1.  Install [Python 3.9+](https://www.python.org/downloads/) and [uv](https://docs.astral.sh/uv/).
+2.  Clone the repository:
+    ```bash
+    git clone https://github.com/Gururagavendra/gmail-cleaner.git
+    cd gmail-cleaner
+    ```
+3.  Install dependencies:
+    ```bash
+    uv sync
+    ```
+4.  Build the app:
+    ```bash
+    uv run python build_app.py
+    ```
+    The built application will be available in the `dist/` folder.
 
 ## Contributing
 
