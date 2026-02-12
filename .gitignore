@@ -29,5 +29,6 @@ IMPROVEMENTS.md
 htmlcov/
 coverage.xml
 
-# GitHub Copilot instructions (user specific)
-.github/copilot-instructions.md
+# PyInstaller
+build/
+dist/
