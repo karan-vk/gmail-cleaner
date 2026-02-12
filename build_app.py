@@ -15,7 +15,8 @@ def build():
 
     # Fix for macOS where /usr/local/bin/arch might shadow /usr/bin/arch
     # PyInstaller relies on /usr/bin/arch behavior
-    os.environ["PATH"] = "/usr/bin:" + os.environ.get("PATH", "")
+    if sys.platform == "darwin":
+        os.environ["PATH"] = "/usr/bin:" + os.environ.get("PATH", "")
 
     PyInstaller.__main__.run(["gmail-cleaner.spec", "--noconfirm", "--clean"])
 
