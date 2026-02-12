@@ -19,6 +19,13 @@ logger = logging.getLogger(__name__)
 @router.post("/setup")
 async def setup_credentials(file: UploadFile = File(...)):
     """Upload credentials.json file."""
+    # Check if credentials already exist
+    if os.path.exists(settings.credentials_file):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Credentials file already exists. Please delete it manually to upload a new one.",
+        )
+
     try:
         content = await file.read()
 
@@ -50,7 +57,6 @@ async def setup_credentials(file: UploadFile = File(...)):
         logger.info(f"Credentials uploaded successfully to {settings.credentials_file}")
         return {
             "message": "Credentials uploaded successfully",
-            "path": settings.credentials_file,
         }
 
     except HTTPException:
@@ -59,5 +65,5 @@ async def setup_credentials(file: UploadFile = File(...)):
         logger.exception("Error uploading credentials")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to upload credentials: {str(e)}",
-        )
+            detail="Failed to upload credentials. Please check server logs.",
+        ) from e

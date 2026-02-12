@@ -56,7 +56,8 @@ def main():
         ).start()
 
     # Start FastAPI with Uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=port, log_level="warning")
+    host = os.environ.get("HOST", "127.0.0.1")
+    uvicorn.run(app, host=host, port=port, log_level="warning")
 
 
 if __name__ == "__main__":

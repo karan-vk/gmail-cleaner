@@ -4,6 +4,7 @@ Application Configuration
 Central configuration and settings for the application.
 """
 
+import logging
 import os
 import platformdirs
 from pydantic import Field, field_validator
@@ -54,19 +55,24 @@ class Settings(BaseSettings):
         super().__init__(**kwargs)
 
         # 1. Determine Data Directory
-        # Check for Docker environment first
-        if os.path.exists("/app/data") and os.path.isdir("/app/data"):
-            self.data_dir = "/app/data"
-        else:
-            # Local environment - use platform-specific user data dir
-            self.data_dir = platformdirs.user_data_dir(
-                "gmail-cleaner", "Gururagavendra"
-            )
+        # Only set if not already provided via env var
+        if not self.data_dir:
+            # Check for Docker environment first
+            if os.path.exists("/app/data") and os.path.isdir("/app/data"):
+                self.data_dir = "/app/data"
+            else:
+                # Local environment - use platform-specific user data dir
+                self.data_dir = platformdirs.user_data_dir(
+                    "gmail-cleaner", "Gururagavendra"
+                )
 
         # 2. Ensure directory exists
         try:
             os.makedirs(self.data_dir, exist_ok=True)
         except OSError:
+            logging.warning(
+                f"Could not create data directory '{self.data_dir}'. Falling back to current working directory."
+            )
             # Fallback to current directory if we can't create the data dir
             # This might happen in some restricted environments
             self.data_dir = os.getcwd()
