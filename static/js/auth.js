@@ -7,12 +7,63 @@ window.GmailCleaner = window.GmailCleaner || {};
 GmailCleaner.Auth = {
     async checkStatus() {
         try {
+            // First check if we need setup
+            const webStatusResp = await fetch('/api/web-auth-status');
+            const webStatus = await webStatusResp.json();
+
+            if (webStatus.needs_setup && !webStatus.has_credentials) {
+                GmailCleaner.UI.showView('setup');
+                return;
+            }
+
             const response = await fetch('/api/auth-status');
             const status = await response.json();
             this.updateUI(status);
         } catch (error) {
             console.error('Error checking auth status:', error);
             GmailCleaner.UI.showView('login');
+        }
+    },
+
+    handleFileSelect(input) {
+        const file = input.files[0];
+        if (file) {
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileInfo').classList.remove('hidden');
+            document.querySelector('.setup-actions').classList.add('hidden');
+        }
+    },
+
+    async uploadCredentials() {
+        const input = document.getElementById('credentialsFile');
+        const file = input.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const btn = document.getElementById('uploadBtn');
+        const originalText = btn.innerText;
+        btn.disabled = true;
+        btn.innerText = 'Uploading...';
+
+        try {
+            const response = await fetch('/api/setup', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Upload failed');
+            }
+
+            // Success! Reload to refresh state
+            window.location.reload();
+        } catch (error) {
+            alert('Error uploading credentials: ' + error.message);
+            btn.disabled = false;
+            btn.innerText = originalText;
         }
     },
 
@@ -66,7 +117,7 @@ GmailCleaner.Auth = {
             // Check if credentials exist
             if (!status.has_credentials) {
                 this.resetSignInButton();
-                alert('credentials.json not found!\n\nSetup instructions:\n1. Go to https://console.cloud.google.com/\n2. Create project → Enable Gmail API\n3. Create OAuth credentials (Desktop app)\n4. Download JSON → rename to credentials.json\n5. Put credentials.json in the app folder\n6. Restart the app');
+                GmailCleaner.UI.showView('setup');
                 return;
             }
 
