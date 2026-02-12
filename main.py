@@ -31,17 +31,17 @@ def main():
     )
 
     if not has_creds:
-        print(f"\nERROR: {settings.credentials_file} not found!")
+        print(f"\nWARNING: {settings.credentials_file} not found!")
+        print("\nStarting in Setup Mode...")
+        print(f"Please place 'credentials.json' in: {settings.data_dir}")
         print("\nSetup instructions:")
         print("1. Go to https://console.cloud.google.com/")
         print("2. Create project -> Enable Gmail API")
         print("3. Create OAuth credentials (Desktop app)")
         print("4. Download JSON -> rename to credentials.json")
-        print("5. Put credentials.json in:", os.getcwd())
-        print("\nExiting. Please add credentials.json and try again.")
-        return
-
-    print(f"\n{settings.credentials_file} found!")
+        print(f"5. Put credentials.json in: {settings.data_dir}")
+    else:
+        print(f"\n{settings.credentials_file} found!")
 
     port = int(os.environ.get("PORT", settings.port))
 
