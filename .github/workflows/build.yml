@@ -11,7 +11,10 @@ jobs:
   build:
     name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
     strategy:
+      fail-fast: false
       matrix:
         # macos-13 is the last Intel runner
         # macos-14 is Apple Silicon (M1)
@@ -48,9 +51,11 @@ jobs:
       with:
         name: gmail-cleaner-${{ matrix.os }}
         path: gmail-cleaner-${{ matrix.os }}.zip
+        if-no-files-found: error
+        retention-days: 30
 
     - name: Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         files: gmail-cleaner-${{ matrix.os }}.zip
