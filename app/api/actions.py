@@ -40,8 +40,44 @@ from app.services import (
     mark_important_background,
 )
 
+from app.core.exceptions import (
+    GmailCleanerError,
+    AuthError,
+    NetworkError,
+    GmailApiError,
+    QuotaExceededError,
+    ResourceNotFoundError,
+    ValidationError,
+)
+
 router = APIRouter(prefix="/api", tags=["Actions"])
 logger = logging.getLogger(__name__)
+
+
+def _handle_api_error(e: Exception, default_message: str):
+    """Helper to map application exceptions to HTTP exceptions."""
+    if isinstance(e, AuthError):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
+    elif isinstance(e, ResourceNotFoundError):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+    elif isinstance(e, QuotaExceededError):
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS, detail=str(e)
+        )
+    elif isinstance(e, ValidationError):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    elif isinstance(e, (NetworkError, GmailApiError)):
+        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=str(e))
+    elif isinstance(e, GmailCleanerError):
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
+
+    logger.exception(default_message)
+    raise HTTPException(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        detail=default_message,
+    ) from e
 
 
 @router.post("/scan")
@@ -67,11 +103,7 @@ async def api_sign_out():
     try:
         return sign_out()
     except Exception as e:
-        logger.exception("Error during sign-out")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to sign out",
-        ) from e
+        _handle_api_error(e, "Failed to sign out")
 
 
 @router.post("/unsubscribe")
@@ -80,11 +112,7 @@ async def api_unsubscribe(request: UnsubscribeRequest):
     try:
         return unsubscribe_single(request.domain, request.link)
     except Exception as e:
-        logger.exception("Error during unsubscribe")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to unsubscribe",
-        ) from e
+        _handle_api_error(e, "Failed to unsubscribe")
 
 
 @router.post("/mark-read")
@@ -120,11 +148,7 @@ async def api_delete_emails(request: DeleteEmailsRequest):
     try:
         return delete_emails_by_sender(request.sender)
     except Exception as e:
-        logger.exception("Error deleting emails")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to delete emails",
-        ) from e
+        _handle_api_error(e, "Failed to delete emails")
 
 
 @router.post("/delete-emails-bulk")
@@ -155,11 +179,7 @@ async def api_create_label(request: CreateLabelRequest):
     try:
         return create_label(request.name)
     except Exception as e:
-        logger.exception("Error creating label")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to create label",
-        ) from e
+        _handle_api_error(e, "Failed to create label")
 
 
 @router.delete("/labels/{label_id}")
@@ -173,11 +193,7 @@ async def api_delete_label(label_id: str):
     try:
         return delete_label(label_id)
     except Exception as e:
-        logger.exception("Error deleting label")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to delete label",
-        ) from e
+        _handle_api_error(e, "Failed to delete label")
 
 
 @router.post("/apply-label")
