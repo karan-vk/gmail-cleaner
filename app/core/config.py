@@ -91,6 +91,40 @@ class Settings(BaseSettings):
         "https://www.googleapis.com/auth/gmail.modify",
     ]
 
+    # Performance Settings
+    batch_size: int = Field(
+        default=100,
+        ge=10,
+        le=200,
+        description="Batch size for Gmail API requests (10-200)",
+    )
+    max_workers: int = Field(
+        default=4,
+        ge=1,
+        le=10,
+        description="Maximum number of parallel workers for processing",
+    )
+    chunk_size: int = Field(
+        default=1000,
+        ge=100,
+        le=10000,
+        description="Number of emails to process in a single chunk",
+    )
+    checkpoint_interval: int = Field(
+        default=5000,
+        ge=1000,
+        le=50000,
+        description="Save progress checkpoint every N emails",
+    )
+    enable_streaming: bool = Field(
+        default=True,
+        description="Enable streaming mode for large inboxes (memory efficient)",
+    )
+    adaptive_rate_limit: bool = Field(
+        default=True,
+        description="Enable adaptive rate limiting based on API responses",
+    )
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
