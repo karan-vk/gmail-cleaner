@@ -1047,3 +1047,46 @@
     font-size: 12px;
     color: var(--text-tertiary);
 }
+
+/* Setup View Styles */
+.setup-actions {
+    margin: 20px 0;
+}
+
+.file-info {
+    margin-bottom: 20px;
+}
+
+.file-name {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.file-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.setup-instructions {
+    margin-top: 30px;
+    text-align: left;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #dadce0;
+}
+
+.setup-instructions h3 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.setup-instructions ol {
+    padding-left: 20px;
+    color: #5f6368;
+    margin-bottom: 0;
+}

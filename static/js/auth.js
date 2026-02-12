@@ -9,6 +9,9 @@ GmailCleaner.Auth = {
         try {
             // First check if we need setup
             const webStatusResp = await fetch('/api/web-auth-status');
+            if (!webStatusResp.ok) {
+                throw new Error(`Web auth status check failed: ${webStatusResp.status}`);
+            }
             const webStatus = await webStatusResp.json();
 
             if (webStatus.needs_setup && !webStatus.has_credentials) {
@@ -17,6 +20,9 @@ GmailCleaner.Auth = {
             }
 
             const response = await fetch('/api/auth-status');
+            if (!response.ok) {
+                throw new Error(`Auth status check failed: ${response.status}`);
+            }
             const status = await response.json();
             this.updateUI(status);
         } catch (error) {
@@ -28,6 +34,12 @@ GmailCleaner.Auth = {
     handleFileSelect(input) {
         const file = input.files[0];
         if (file) {
+            if (!file.name.toLowerCase().endsWith('.json')) {
+                alert('Please select a valid JSON file (credentials.json)');
+                input.value = '';
+                return;
+            }
+
             document.getElementById('fileName').textContent = file.name;
             document.getElementById('fileInfo').classList.remove('hidden');
             document.querySelector('.setup-actions').classList.add('hidden');
