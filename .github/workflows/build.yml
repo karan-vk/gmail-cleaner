@@ -15,7 +15,7 @@ jobs:
       matrix:
         # macos-13 is the last Intel runner
         # macos-14 is Apple Silicon (M1)
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-14]
 
     steps:
     - uses: actions/checkout@v4
