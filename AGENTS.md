@@ -1,7 +1,6 @@
 # AGENTS.md - Development Guide
 
 **Generated:** Thu, Feb 12, 2026
-**Commit:** {DYNAMIC}
 **Branch:** main
 
 ## OVERVIEW
@@ -33,7 +32,7 @@ Privacy-focused Gmail cleanup tool using **FastAPI** (Python 3.9+) and **Vanilla
 | **Email Logic** | `app/services/gmail/` | Modular operations (scan, delete, etc.). |
 | **Frontend UI** | `static/js/` | Ad-hoc framework. `main.js` orchestrates. |
 | **State** | `app/core/state.py` | Global thread-safe state for async tasks. |
-| **API Routes** | `app/api/` | `actions.py` (POST), `status.py` (GET). |
+| **API Routes** | `app/api/` | `actions.py` (POST), `status.py` (GET), `setup.py` (Setup). |
 | **Config** | `app/core/config.py` | Settings via Pydantic (`.env`). |
 
 ## CODE MAP (Key Symbols)
@@ -77,5 +76,5 @@ uv run pyright
 
 ## NOTES
 - **Auth Flow**: Uses a local server callback. Docker requires port mapping.
-- **Data Persistence**: `token.json` stored in `./data/` (Docker volume).
+- **Data Persistence**: `token.json` stored in `./data/` (Docker volume) or platform-specific data dir via `platformdirs`.
 - **Concurrency**: `app/services/gmail` uses batch requests (performance).
