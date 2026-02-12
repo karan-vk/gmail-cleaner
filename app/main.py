@@ -7,6 +7,8 @@ Main application factory and configuration.
 import hashlib
 import subprocess
 import time
+import sys
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -14,9 +16,21 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from app.core import settings
-from app.api import status_router, actions_router
+from app.api import status_router, actions_router, setup_router
 
-templates = Jinja2Templates(directory="templates")
+
+def resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller"""
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
+templates = Jinja2Templates(directory=resource_path("templates"))
 
 
 def get_cache_bust_value() -> str:
@@ -27,6 +41,10 @@ def get_cache_bust_value() -> str:
     3. Fall back to app version from settings
     4. Fall back to timestamp if both unavailable
     """
+    # Skip git checks if frozen (PyInstaller)
+    if getattr(sys, "frozen", False):
+        return settings.app_version or str(int(time.time()))
+
     base_value = None
 
     # Try git commit hash first
@@ -135,11 +153,12 @@ def create_app() -> FastAPI:
     )
 
     # Mount static files
-    app.mount("/static", StaticFiles(directory="static"), name="static")
+    app.mount("/static", StaticFiles(directory=resource_path("static")), name="static")
 
     # Include API routers
     app.include_router(status_router)
     app.include_router(actions_router)
+    app.include_router(setup_router)
 
     # HTML routes
     @app.get("/", include_in_schema=False)
