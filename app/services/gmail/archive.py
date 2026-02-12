@@ -5,11 +5,16 @@ Functions for archiving emails (removing from inbox).
 """
 
 import time
+import logging
 
 from app.core import state
 from app.services.auth import get_gmail_service
+from app.services.gmail.error_handler import handle_gmail_errors
+
+logger = logging.getLogger(__name__)
 
 
+@handle_gmail_errors
 def archive_emails_background(senders: list[str]):
     """Archive emails from selected senders (remove INBOX label)."""
     state.reset_archive()

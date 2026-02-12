@@ -11,12 +11,15 @@ from collections import defaultdict
 from typing import Optional
 
 from app.core import state
+from app.core.exceptions import GmailCleanerError
 from app.services.auth import get_gmail_service
+from app.services.gmail.error_handler import handle_gmail_errors
 from app.services.gmail.helpers import build_gmail_query, get_sender_info, get_subject
 
 logger = logging.getLogger(__name__)
 
 
+@handle_gmail_errors
 def scan_senders_for_delete(limit: int = 1000, filters: Optional[dict] = None):
     """Scan emails and group by sender for bulk delete."""
     # Validate input

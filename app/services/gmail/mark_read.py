@@ -5,10 +5,14 @@ Functions for marking emails as read.
 """
 
 from typing import Optional
+import logging
 
 from app.core import state
 from app.services.auth import get_gmail_service
+from app.services.gmail.error_handler import handle_gmail_errors
 from app.services.gmail.helpers import build_gmail_query
+
+logger = logging.getLogger(__name__)
 
 
 def get_unread_count() -> dict:
@@ -32,6 +36,7 @@ def get_unread_count() -> dict:
         return {"count": 0, "error": str(e)}
 
 
+@handle_gmail_errors
 def mark_emails_as_read(count: int = 100, filters: Optional[dict] = None):
     """Mark unread emails as read.
 

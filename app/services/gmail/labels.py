@@ -6,6 +6,7 @@ Functions for managing Gmail labels.
 
 from app.core import state
 from app.services.auth import get_gmail_service
+from app.services.gmail.error_handler import handle_gmail_errors
 
 
 def get_labels() -> dict:
@@ -106,6 +107,7 @@ def delete_label(label_id: str) -> dict:
         return {"success": False, "error": error_msg}
 
 
+@handle_gmail_errors
 def _apply_label_operation_background(
     label_id: str,
     senders: list[str],
