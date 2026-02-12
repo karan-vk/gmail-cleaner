@@ -16,11 +16,11 @@ A **free**, privacy-focused tool to bulk unsubscribe from emails, delete emails 
 The easiest way to use Gmail Cleaner is to download the standalone app for your operating system.
 
 1.  Go to the [Releases](https://github.com/Gururagavendra/gmail-cleaner/releases) page.
-2.  Download the version for your OS:
-    *   **Windows**: `.exe` installer
-    *   **macOS**: `.dmg` or `.app`
-    *   **Linux**: `AppImage` or binary
-3.  Launch the app and follow the on-screen instructions to upload your `credentials.json`.
+2.  Download the ZIP archive for your OS:
+    *   **Windows**: `gmail-cleaner-windows.zip` (contains `.exe`)
+    *   **macOS**: `gmail-cleaner-macos.zip` (contains `.app`)
+    *   **Linux**: `gmail-cleaner-linux.zip` (contains binary)
+3.  Extract the ZIP archive and run the executable. Follow the on-screen instructions to upload your `credentials.json`.
 
 ## Features
 
@@ -43,12 +43,12 @@ The easiest way to use Gmail Cleaner is to download the standalone app for your 
 
 Works on **all major platforms** - both Docker and local installation:
 
-| Platform | Docker | Local (Python) |
-|----------|--------|----------------|
-| Linux (x86_64) | Native | Native |
-| Windows (x86_64) | Native | Native |
-| macOS Intel | Native | Native |
-| macOS Apple Silicon (M1/M2/M3/M4) | Native | Native |
+| Platform | Standalone App | Docker | Local (Python) |
+|----------|----------------|--------|----------------|
+| Linux (x86_64) | Native | Native | Native |
+| Windows (x86_64) | Native | Native | Native |
+| macOS Intel | Native | Native | Native |
+| macOS Apple Silicon (M1/M2/M3/M4) | Native | Native | Native |
 
 ## Security & Privacy
 
@@ -80,6 +80,7 @@ Lets make this tool a better one by improving as much as possible, All features 
 
 ## Prerequisites
 
+- **Standalone App**: No prerequisites required.
 - **Docker**: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - **Local (Python)**: [Python 3.9+](https://www.python.org/downloads/) and [uv](https://docs.astral.sh/uv/getting-started/installation/)
 
@@ -146,7 +147,7 @@ cd gmail-cleaner
 
 ### Option A: Standalone App (Recommended)
 
-1.  Download and install the app from the [Releases](https://github.com/Gururagavendra/gmail-cleaner/releases) page.
+1.  Download and extract the app from the [Releases](https://github.com/Gururagavendra/gmail-cleaner/releases) page.
 2.  Launch the application.
 3.  When prompted, upload your `credentials.json` file.
 4.  Click **"Sign In"** and follow the OAuth flow in your browser.
@@ -432,7 +433,7 @@ If you want to build the standalone app yourself:
     ```bash
     uv run python build_app.py
     ```
-    The built application will be available in the `dist/` folder.
+    The built application will be available in the `dist/gmail-cleaner/` folder.
 
 ## Contributing
 
