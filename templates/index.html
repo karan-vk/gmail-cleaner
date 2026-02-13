@@ -244,21 +244,37 @@
                                         <div class="instruction-card">
                                             <div class="instruction-number">4</div>
                                             <div class="instruction-content">
-                                                <h4>Create OAuth Credentials</h4>
-                                                <p>Go to <strong>APIs & Services → Credentials</strong>, click <strong>"Create Credentials" → "OAuth client ID"</strong>.</p>
+                                                <h4>Configure Consent Screen</h4>
+                                                <p>Go to <strong>Google Auth Platform</strong> (or OAuth consent screen). Click <strong>Get Started</strong>. Select <strong>External</strong>. Fill in App Name and Contact Info.</p>
                                             </div>
                                         </div>
 
                                         <div class="instruction-card">
                                             <div class="instruction-number">5</div>
                                             <div class="instruction-content">
-                                                <h4>Configure & Download</h4>
-                                                <p>Select <strong>Desktop app</strong> as the application type. Name it and click Create. Download the JSON file.</p>
+                                                <h4>Add Test Users</h4>
+                                                <p>Go to <strong>Audience</strong> > <strong>Test users</strong>. Click <strong>Add Users</strong> and enter your own Gmail address. <br><strong>Important:</strong> You must add yourself to sign in!</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="instruction-card">
+                                            <div class="instruction-number">6</div>
+                                            <div class="instruction-content">
+                                                <h4>Create Client ID</h4>
+                                                <p>Go to <strong>Clients</strong> (or Credentials). Click <strong>Create Client</strong>.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="instruction-card">
+                                            <div class="instruction-number">7</div>
+                                            <div class="instruction-content">
+                                                <h4>Select App Type & Download</h4>
+                                                <p>Select <strong>Desktop app</strong> (for local) or <strong>Web application</strong> (for Docker). Name it and click Create. Download the JSON file.</p>
                                                 <div class="setup-tip">
                                                     <svg viewBox="0 0 24 24" width="16" height="16">
                                                         <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
                                                     </svg>
-                                                    <span>For Docker, use "Web application" and add your URL as an authorized redirect URI.</span>
+                                                    <span>Docker users: Add authorized redirect URI (e.g., http://localhost:8767/)</span>
                                                 </div>
                                             </div>
                                         </div>
