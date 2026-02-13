@@ -22,9 +22,9 @@ The easiest way to use Gmail Cleaner is to download the standalone app for your 
 
 1.  Go to the [Releases](https://github.com/Gururagavendra/gmail-cleaner/releases) page.
 2.  Download the ZIP archive for your OS:
-    *   **Windows**: `gmail-cleaner-windows.zip` (contains `.exe`)
-    *   **macOS**: `gmail-cleaner-macos.zip` (contains `.app`)
-    *   **Linux**: `gmail-cleaner-linux.zip` (contains binary)
+    *   **Windows**: `gmail-cleaner-windows-latest.zip` (contains `.exe`)
+    *   **macOS**: `gmail-cleaner-macos-14.zip` (contains binary)
+    *   **Linux**: `gmail-cleaner-ubuntu-latest.zip` (contains binary)
 3.  Extract the ZIP archive and run the executable. Follow the on-screen instructions to upload your `credentials.json`.
 
 ## Features
